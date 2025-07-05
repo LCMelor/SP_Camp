@@ -1,0 +1,83 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Java
+*.class
+*.jar
+!SPEC/SPECjvm2008/SPECjvm2008.jar
+!SPEC/SPECjvm2008/lib/*.jar
+!SPEC/SPECjvm2008_1_01_setup.jar
+
+# misc
+docu/*
+!docu/code/
+!docu/code/**
+
+# 环境
+.env
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 日志和数据库
+*.log
+*.sqlite3
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 编译输出
+build/
+dist/
+*.egg-info/
+
+# SPEC 基准测试结果和输出
+SPEC/SPECjvm2008/results/
+Assignment1/output/
+Assignment1/log_*.txt
+Assignment1/*.log
+
+# 测试结果文件
+*.raw
+*.txt
+*.html
+*.summary
+*.sub
+!README.md
+!Assignment1/config/*.properties
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# WPS 临时文件
+.~*
+
+# 图片生成文件
+*.jpg
+*.png
+*.gif
+!docu/*.pdf
+!docu/*.wps
+
+# 提取的文件夹
+SPEC/extracted/
+
+# 修复的 JAR 文件
+*_repaired.jar
