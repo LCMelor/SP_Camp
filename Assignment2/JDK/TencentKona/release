@@ -1,0 +1,5 @@
+JAVA_VERSION="1.8.0_452"
+OS_NAME="Linux"
+OS_VERSION="2.6"
+OS_ARCH="amd64"
+SOURCE=".:git:37e531eb6e4b+ tools:git:ccdbfbb61d59"
