@@ -78,6 +78,24 @@ Thumbs.db
 *.log
 *.sqlite3
 *.db
+*.sqlite
+
+# =============================================================================
+# 性能分析相关文件
+# =============================================================================
+# 性能数据文件
+*.data
+perf.data*
+/tmp/perf-*.map
+
+# 火焰图工作目录
+Assignment3/flamegraph_work/
+Assignment3/output/
+
+# 保留火焰图生成脚本和分析工具
+!Assignment3/generate*.sh
+!Assignment3/export_to_database.py
+!Assignment3/analyze_database.py
 
 # =============================================================================
 # SPEC 基准测试结果和输出
@@ -115,6 +133,23 @@ Assignment2/*.log
 !Assignment2/scripts/**
 !Assignment2/JDK/
 
+# Assignment3 性能分析输出
+Assignment3/flamegraph_work/
+Assignment3/output/
+Assignment3/__pycache__/
+
+# 保留 Assignment3 的核心文件
+!Assignment3/README.md
+!Assignment3/generate*.sh
+!Assignment3/export_to_database.py
+!Assignment3/analyze_database.py
+!Assignment3/TestFibonacci.java
+!Assignment3/TestFibonacci.class
+!Assignment3/FlameGraph/
+!Assignment3/FlameGraph/**
+!Assignment3/perf-map-agent/
+!Assignment3/perf-map-agent/**
+
 # =============================================================================
 # 测试结果文件
 # =============================================================================
@@ -151,14 +186,17 @@ docu/*
 !docu/*.md
 
 # =============================================================================
-# 多媒体文件 (生成的图片)
+# 多媒体文件 (生成的图片和火焰图)
 # =============================================================================
 *.jpg
 *.png
 *.gif
-*.svg
-# 保留文档中的图片
+# 火焰图SVG文件 (通常较大)
+flamegraph_work/**/*.svg
+output/**/*.svg
+# 保留文档中的图片和小的示例图
 !docu/images/
 !docu/images/**
 !README_images/
 !README_images/**
+!**/example*.svg
