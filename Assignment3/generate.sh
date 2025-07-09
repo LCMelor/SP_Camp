@@ -4,7 +4,7 @@
 # 支持更全面的系统调用和内核事件采集
 #
 
-set -e
+# set -e
 
 # 配置
 
@@ -33,9 +33,6 @@ setup_system_config() {
     
     # 如果权限过于严格，尝试临时放宽
     if [ "$PARANOID" -gt 2 ]; then
-        echo "权限过于严格，尝试临时调整..."
-        echo "需要 root 权限来调整系统配置"
-        
         # 备份原始值
         echo "$PARANOID" > /tmp/original_perf_paranoid.bak
         echo "$KPTR_RESTRICT" > /tmp/original_kptr_restrict.bak
@@ -43,9 +40,6 @@ setup_system_config() {
         # 临时放宽权限以获得更丰富的性能数据
         sudo sysctl -w kernel.perf_event_paranoid=1
         sudo sysctl -w kernel.kptr_restrict=0
-        
-        echo "系统配置已临时调整为更宽松的设置"
-        echo "这将允许收集更全面的性能数据包括内核符号"
     fi
 }
 
@@ -160,6 +154,7 @@ if [ "$RUN_SPEC" = true ]; then
     cd "$SPECJVM_DIR"
     java -XX:+PreserveFramePointer -XX:+UnlockDiagnosticVMOptions \
          -XX:+DebugNonSafepoints -XX:-OptimizeStringConcat \
+        -XX:+StartAttachListener  -XX:+ShowHiddenFrames \
          -jar SPECjvm2008.jar -Dspecjvm.result.dir="$OUTPUT_DIR" \
          -ikv --lagom -i 1 -bt 16 $PROGRAM_NAME &
 else
@@ -174,6 +169,10 @@ sleep 2
 kill -0 "$JAVA_PID" 2>/dev/null || { echo "错误: 程序启动失败"; exit 1; }
 echo "程序已启动，PID: $JAVA_PID"
 
+if [ "$RUN_SPEC" = true ]; then
+    sleep 10
+fi
+
 # 性能采样和火焰图生成
 
 echo "开始性能采样 ($PERF_RECORD_SECONDS 秒)..."
@@ -186,6 +185,10 @@ ATTACH_JAR="$PERF_MAP_AGENT_DIR/out/attach-main.jar"
 # 获取进程信息
 TARGET_UID=$(awk '/^Uid:/{print $2}' /proc/$JAVA_PID/status)
 TARGET_GID=$(awk '/^Gid:/{print $2}' /proc/$JAVA_PID/status)
+
+if [ "$RUN_SPEC" = true ]; then
+    sleep 10
+fi
 
 # 1. 性能数据采集 - 简化采样配置
 echo "采集性能数据..."
@@ -220,7 +223,7 @@ echo "生成火焰图..."
 "$FLAMEGRAPH_DIR/flamegraph.pl" \
     --color=java \
     --title="$PROGRAM_NAME - Performance Profile" \
-    --subtitle="Java性能分析火焰图, 采样时间: ${PERF_RECORD_SECONDS}s" \
+    --subtitle="Java Performance Analysis Flame Graph, Sample Time: ${PERF_RECORD_SECONDS}s" \
     --width=1400 \
     --fontsize=10 \
     --hash \
