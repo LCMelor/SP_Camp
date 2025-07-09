@@ -169,9 +169,6 @@ sleep 2
 kill -0 "$JAVA_PID" 2>/dev/null || { echo "错误: 程序启动失败"; exit 1; }
 echo "程序已启动，PID: $JAVA_PID"
 
-if [ "$RUN_SPEC" = true ]; then
-    sleep 10
-fi
 
 # 性能采样和火焰图生成
 
