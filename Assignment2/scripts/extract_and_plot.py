@@ -188,19 +188,6 @@ def create_simple_boxplot(jdk_data, run_name, output_dir="/home/miller/zju/sp_ca
     print(f"  Boxplot saved to: {output_path}")
     plt.close()
 
-def print_performance_ranking(jdk_data, run_name):
-    """打印性能排名"""
-    if not jdk_data:
-        return
-    
-    # 按性能排序
-    sorted_jdks = sorted(jdk_data.items(), key=lambda x: x[1]['mean'], reverse=True)
-    
-    print(f"  === {run_name} Performance Ranking ===")
-    for i, (jdk_name, data) in enumerate(sorted_jdks, 1):
-        display_name = jdk_name.replace('-', ' ').replace('_', ' ')
-        print(f"  {i}. {display_name}: {data['mean']:.2f}±{data['std']:.2f} ops/m")
-
 def main():
     """主函数"""
     print("=== SPECjvm2008 Log Data Analysis ===")
@@ -236,9 +223,6 @@ def main():
         
         print(f"  创建箱线图...")
         create_simple_boxplot(jdk_data, run_dir.name)
-        
-        # 打印排名
-        print_performance_ranking(jdk_data, run_dir.name)
     
     print("\n=== 所有分析完成! ===")
     print(f"结果图表保存在 img/ 目录下的各个子目录中")

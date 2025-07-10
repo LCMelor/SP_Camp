@@ -163,9 +163,9 @@ def statistical_tests(jvm_data, run_name, output_file=None, alpha=0.05):
     log("-" * 40)
     
     if anova_significant:
-        log(f"✓ ANOVA显示JVM间存在显著差异")
+        log(f" ANOVA显示JVM间存在显著差异")
         if corrected_significant:
-            log(f"✓ 经Bonferroni校正后仍显著的JVM对:")
+            log(f" 经Bonferroni校正后仍显著的JVM对:")
             for jvm1, jvm2 in corrected_significant:
                 mean1, mean2 = jvm_data[jvm1]['mean'], jvm_data[jvm2]['mean']
                 log(f"  - {jvm1} ({mean1:.2f}) vs {jvm2} ({mean2:.2f})")
@@ -258,9 +258,9 @@ def main():
             ])
             
             if results['anova_significant']:
-                summary_lines.append("✓ ANOVA显示JVM间存在显著差异")
+                summary_lines.append(" ANOVA显示JVM间存在显著差异")
                 if results['corrected_significant_pairs']:
-                    summary_lines.append("✓ 经Bonferroni校正后仍有显著差异的JVM对:")
+                    summary_lines.append(" 经Bonferroni校正后仍有显著差异的JVM对:")
                     for jvm1, jvm2 in results['corrected_significant_pairs']:
                         summary_lines.append(f"  - {jvm1} vs {jvm2}")
                 else:
